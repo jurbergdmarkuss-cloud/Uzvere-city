@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uzvere City</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0e1f1c;
+  color: white;
+}
+
+/* HEADER WITH LOGO */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: linear-gradient(to right, #0f766e, #115e59);
+  padding: 25px 20px;
+  text-align: left;
+}
+.logo {
+  width: 120px;
+}
+.header-right h1 {
+  margin: 0;
+  font-size: 36px;
+}
+.header-right p {
+  margin: 5px 0 0;
+  color: #5eead4;
+}
+
+/* LANGUAGE BUTTONS */
+.lang {
+  text-align: center;
+  background: #042f2e;
+  padding-bottom: 10px;
+}
+.lang button {
+  background: #042f2e;
+  color: #5eead4;
+  border: none;
+  margin: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: center;
+  background: #042f2e;
+}
+nav button {
+  background: none;
+  border: none;
+  color: #5eead4;
+  padding: 15px 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
+nav button.active {
+  border-bottom: 3px solid #5eead4;
+}
+
+/* SECTIONS */
+section {
+  display: none;
+  padding: 30px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+section.active {
+  display: block;
+}
+
+/* CARDS */
+.card {
+  background: #134e4a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* MAPS */
+iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  border: 0;
+  margin-top: 15px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #042f2e;
+  font-size: 14px;
+  opacity: 0.8;
+}
+</style>
+
+<script>
+const text = {
+  en: {
+    subtitle: "A peaceful eco city by nature and water",
+    cityTab: "🏙️ About the City",
+    airTab: "✈️ Lidlauks",
+    cityTitle: "About Uzvere",
+    cityText: "Uzvere is a calm eco-city concept located near nature and water.",
+    cityList: ["Eco-friendly area", "Boat & walking access", "Mobile data available", "No big buildings"],
+    airTitle: "Uzvere Airfield",
+    airText: "Uzvere Airfield is a small grass airfield for ultralight and small aircraft.",
+    runway: "Runway length: 190 meters (grass)",
+    lands: "Small lands (Uzveres salas)",
+    weather: "Current Weather"
+  },
+  lv: {
+    subtitle: "Mierīga eko pilsēta dabā un pie ūdens",
+    cityTab: "🏙️ Par pilsētu",
+    airTab: "✈️ Lidlauks",
+    cityTitle: "Par Uzveri",
+    cityText: "Uzvere ir mierīgas eko-pilsētas koncepts dabas tuvumā.",
+    cityList: ["Videi draudzīga teritorija", "Piekļuve ar laivu un kājām", "Pieejami mobilie dati", "Nav lielu ēku"],
+    airTitle: "Uzveres lidlauks",
+    airText: "Uzveres lidlauks ir neliels zāles lidlauks vieglajai aviācijai.",
+    runway: "Skrejceļa garums: 190 metri (zāle)",
+    lands: "Mazās zemes (Uzveres salas)",
+    weather: "Laika apstākļi"
+  },
+  ru: {
+    subtitle: "Тихий эко-город среди природы и воды",
+    cityTab: "🏙️ О городе",
+    airTab: "✈️ Аэродром",
+    cityTitle: "О Узвере",
+    cityText: "Узвере — концепция спокойного эко-города рядом с природой.",
+    cityList: ["Экологичная зона", "Доступ пешком и на лодке", "Мобильный интернет", "Без больших зданий"],
+    airTitle: "Аэродром Узвере",
+    airText: "Аэродром Узverе — небольшой травяной аэродром.",
+    runway: "Длина ВПП: 190 метров (трава)",
+    lands: "Небольшие участки (Uzveres salas)",
+    weather: "Погода сейчас"
+  }
+};
+
+function setLang(l) {
+  document.getElementById("subtitle").innerText = text[l].subtitle;
+  document.getElementById("cityBtn").innerText = text[l].cityTab;
+  document.getElementById("airBtn").innerText = text[l].airTab;
+  document.getElementById("cityTitle").innerText = text[l].cityTitle;
+  document.getElementById("cityText").innerText = text[l].cityText;
+  document.getElementById("airTitle").innerText = text[l].airTitle;
+  document.getElementById("airText").innerText = text[l].airText;
+  document.getElementById("runway").innerText = text[l].runway;
+  document.getElementById("lands").innerText = text[l].lands;
+  document.getElementById("weatherTitle").innerText = text[l].weather;
+  document.getElementById("cityList").innerHTML =
+    text[l].cityList.map(i => `<li>${i}</li>`).join("");
+}
+
+function openTab(id) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.getElementById(id + "Btn").classList.add("active");
+}
+
+async function loadWeather() {
+  const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.53&longitude=21.17&current_weather=true");
+  const w = (await res.json()).current_weather;
+  document.getElementById("weather").innerText =
+    `🌡️ ${w.temperature}°C   🌬️ ${w.windspeed} km/h`;
+}
+</script>
+</head>
+
+<body onload="setLang('en'); loadWeather();">
+
+<header class="top-header">
+  <img src="logo.png" alt="Uzvere Logo" class="logo">
+  <div class="header-right">
+    <h1>Uzvere</h1>
+    <p id="subtitle"></p>
+  </div>
+</header>
+
+<div class="lang">
+  <button onclick="setLang('lv')">LV</button>
+  <button onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+</div>
+
+<nav>
+  <button id="cityBtn" class="active" onclick="openTab('city')"></button>
+  <button id="airBtn" onclick="openTab('airfield')"></button>
+</nav>
+
+<section id="city" class="active">
+  <h2 id="cityTitle"></h2>
+  <div class="card">
+    <p id="cityText"></p>
+    <ul id="cityList"></ul>
+    <iframe src="https://www.google.com/maps?q=Uzvere,+Grobiņas+pagasts,+Latvia&z=14&output=embed"></iframe>
+  </div>
+</section>
+
+<section id="airfield">
+  <h2 id="airTitle"></h2>
+  <div class="card">
+    <p id="airText"></p>
+    <p><strong id="runway"></strong></p>
+    <h3 id="weatherTitle"></h3>
+    <div id="weather">Loading...</div>
+
+    <!-- LIDLAUKS -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d62a623717%3A0xc5da578c02c12f4c!2sUzveres%20Lidlauks!5e0!3m2!1sen!2slv!4v1766850251999!5m2!1sen!2slv"></iframe>
+
+    <h3 id="lands"></h3>
+
+    <!-- SMALL LANDS -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa947e6d7bdb9%3A0x7fdc2e8d27890a3b!2sUzveres%20salas!5e0!3m2!1sen!2slv!4v1766850098667!5m2!1sen!2slv"></iframe>
+  </div>
+</section>
+
+<footer>
+  © 2025 Uzvere • City & Airfield Concept
+</footer>
+
+</body>
+</html>
