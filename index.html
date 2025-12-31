@@ -35,6 +35,45 @@ body {
   color: #5eead4;
 }
 
+/* NEW YEAR BANNER */
+.ny-banner {
+  max-width: 980px;
+  margin: 12px auto 0;
+  background: #134e4a;
+  border: 1px solid rgba(94,234,212,0.35);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ny-banner .left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ny-badge {
+  background: #042f2e;
+  color: #5eead4;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ny-text {
+  font-size: 15px;
+  line-height: 1.2;
+}
+.ny-close {
+  background: transparent;
+  border: none;
+  color: #5eead4;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
 /* LANGUAGE BUTTONS */
 .lang {
   text-align: center;
@@ -105,6 +144,14 @@ footer {
   font-size: 14px;
   opacity: 0.8;
 }
+
+/* MOBILE HEADER STACK */
+@media (max-width: 520px) {
+  .top-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 </style>
 
 <script>
@@ -120,7 +167,9 @@ const text = {
     airText: "Uzvere Airfield is a small grass airfield for ultralight and small aircraft.",
     runway: "Runway length: 190 meters (grass)",
     lands: "Small lands (Uzveres salas)",
-    weather: "Current Weather"
+    weather: "Current Weather",
+    nyBadge: "🎆 NEW YEAR",
+    nyText: "Happy New Year! Welcome to 2026 🎉"
   },
   lv: {
     subtitle: "Mierīga eko pilsēta dabā un pie ūdens",
@@ -133,7 +182,9 @@ const text = {
     airText: "Uzveres lidlauks ir neliels zāles lidlauks vieglajai aviācijai.",
     runway: "Skrejceļa garums: 190 metri (zāle)",
     lands: "Mazās zemes (Uzveres salas)",
-    weather: "Laika apstākļi"
+    weather: "Laika apstākļi",
+    nyBadge: "🎆 JAUNAIS GADS",
+    nyText: "Laimīgu Jauno gadu! Laipni lūgts 2026. gadā 🎉"
   },
   ru: {
     subtitle: "Тихий эко-город среди природы и воды",
@@ -142,11 +193,13 @@ const text = {
     cityTitle: "О Узвере",
     cityText: "Узвере — концепция спокойного эко-города рядом с природой.",
     cityList: ["Экологичная зона", "Доступ пешком и на лодке", "Мобильный интернет", "Без больших зданий"],
-    airTitle: "Аэродром Узвере",
-    airText: "Аэродром Узverе — небольшой травяной аэродром.",
+    airTitle: "Аэродром Узverе",
+    airText: "Аэродром Узvere — небольшой травяной аэродром.",
     runway: "Длина ВПП: 190 метров (трава)",
     lands: "Небольшие участки (Uzveres salas)",
-    weather: "Погода сейчас"
+    weather: "Погода сейчас",
+    nyBadge: "🎆 НОВЫЙ ГОД",
+    nyText: "С Новым годом! Добро пожаловать в 2026 🎉"
   }
 };
 
@@ -161,6 +214,11 @@ function setLang(l) {
   document.getElementById("runway").innerText = text[l].runway;
   document.getElementById("lands").innerText = text[l].lands;
   document.getElementById("weatherTitle").innerText = text[l].weather;
+
+  // New Year banner text
+  document.getElementById("nyBadge").innerText = text[l].nyBadge;
+  document.getElementById("nyText").innerText = text[l].nyText;
+
   document.getElementById("cityList").innerHTML =
     text[l].cityList.map(i => `<li>${i}</li>`).join("");
 }
@@ -173,15 +231,33 @@ function openTab(id) {
 }
 
 async function loadWeather() {
-  const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.53&longitude=21.17&current_weather=true");
-  const w = (await res.json()).current_weather;
-  document.getElementById("weather").innerText =
-    `🌡️ ${w.temperature}°C   🌬️ ${w.windspeed} km/h`;
+  try {
+    const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.53&longitude=21.17&current_weather=true");
+    const w = (await res.json()).current_weather;
+    document.getElementById("weather").innerText =
+      `🌡️ ${w.temperature}°C   🌬️ ${w.windspeed} km/h`;
+  } catch {
+    document.getElementById("weather").innerText = "Weather unavailable";
+  }
+}
+
+function closeNyBanner() {
+  const el = document.getElementById("nyBanner");
+  el.style.display = "none";
+  localStorage.setItem("uzvere_ny_closed", "1");
+}
+
+function initNyBanner() {
+  // Show banner unless user closed it
+  const closed = localStorage.getItem("uzvere_ny_closed") === "1";
+  if (closed) {
+    document.getElementById("nyBanner").style.display = "none";
+  }
 }
 </script>
 </head>
 
-<body onload="setLang('en'); loadWeather();">
+<body onload="setLang('en'); loadWeather(); initNyBanner();">
 
 <header class="top-header">
   <img src="logo.png" alt="Uzvere Logo" class="logo">
@@ -190,6 +266,15 @@ async function loadWeather() {
     <p id="subtitle"></p>
   </div>
 </header>
+
+<!-- NEW YEAR BANNER -->
+<div id="nyBanner" class="ny-banner">
+  <div class="left">
+    <div id="nyBadge" class="ny-badge">🎆 NEW YEAR</div>
+    <div id="nyText" class="ny-text">Happy New Year! 🎉</div>
+  </div>
+  <button class="ny-close" onclick="closeNyBanner()" aria-label="Close">×</button>
+</div>
 
 <div class="lang">
   <button onclick="setLang('lv')">LV</button>
@@ -216,21 +301,30 @@ async function loadWeather() {
   <div class="card">
     <p id="airText"></p>
     <p><strong id="runway"></strong></p>
+
     <h3 id="weatherTitle"></h3>
     <div id="weather">Loading...</div>
 
-    <!-- LIDLAUKS -->
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d62a623717%3A0xc5da578c02c12f4c!2sUzveres%20Lidlauks!5e0!3m2!1sen!2slv!4v1766850251999!5m2!1sen!2slv"></iframe>
+    <!-- LIDLAUKS (EXACT EMBED) -->
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d62a623717%3A0xc5da578c02c12f4c!2sUzveres%20Lidlauks!5e0!3m2!1sen!2slv!4v1766850251999!5m2!1sen!2slv"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
 
     <h3 id="lands"></h3>
 
-    <!-- SMALL LANDS -->
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa947e6d7bdb9%3A0x7fdc2e8d27890a3b!2sUzveres%20salas!5e0!3m2!1sen!2slv!4v1766850098667!5m2!1sen!2slv"></iframe>
+    <!-- SMALL LANDS (EXACT EMBED) -->
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa947e6d7bdb9%3A0x7fdc2e8d27890a3b!2sUzveres%20salas!5e0!3m2!1sen!2slv!4v1766850098667!5m2!1sen!2slv"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
 </section>
 
 <footer>
-  © 2025 Uzvere • City & Airfield Concept
+  © 2026 Uzvere • City & Airfield Concept
 </footer>
 
 </body>
