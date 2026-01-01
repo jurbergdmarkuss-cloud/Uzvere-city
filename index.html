@@ -13,7 +13,7 @@ body {
   color: white;
 }
 
-/* HEADER WITH LOGO */
+/* HEADER */
 .top-header {
   display: flex;
   align-items: center;
@@ -21,60 +21,31 @@ body {
   gap: 20px;
   background: linear-gradient(to right, #0f766e, #115e59);
   padding: 25px 20px;
-  text-align: left;
 }
-.logo {
-  width: 120px;
-}
-.header-right h1 {
-  margin: 0;
-  font-size: 36px;
-}
-.header-right p {
-  margin: 5px 0 0;
-  color: #5eead4;
-}
+.logo { width: 120px; }
+.header-right h1 { margin: 0; font-size: 36px; }
+.header-right p { margin: 5px 0 0; color: #5eead4; }
 
 /* NEW YEAR BANNER */
 .ny-banner {
   max-width: 980px;
-  margin: 12px auto 0;
+  margin: 12px auto;
   background: #134e4a;
-  border: 1px solid rgba(94,234,212,0.35);
   border-radius: 12px;
-  padding: 12px 14px;
+  padding: 12px 16px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-}
-.ny-banner .left {
-  display: flex;
   align-items: center;
-  gap: 10px;
-}
-.ny-badge {
-  background: #042f2e;
-  color: #5eead4;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 13px;
-  white-space: nowrap;
-}
-.ny-text {
-  font-size: 15px;
-  line-height: 1.2;
 }
 .ny-close {
-  background: transparent;
+  background: none;
   border: none;
   color: #5eead4;
   font-size: 22px;
   cursor: pointer;
-  line-height: 1;
 }
 
-/* LANGUAGE BUTTONS */
+/* LANGUAGE */
 .lang {
   text-align: center;
   background: #042f2e;
@@ -100,7 +71,7 @@ nav button {
   background: none;
   border: none;
   color: #5eead4;
-  padding: 15px 25px;
+  padding: 15px 20px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -115,9 +86,7 @@ section {
   max-width: 900px;
   margin: auto;
 }
-section.active {
-  display: block;
-}
+section.active { display: block; }
 
 /* CARDS */
 .card {
@@ -125,6 +94,14 @@ section.active {
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
+}
+
+/* EVENTS */
+.event {
+  background: #0f766e;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
 }
 
 /* MAPS */
@@ -141,16 +118,7 @@ footer {
   text-align: center;
   padding: 20px;
   background: #042f2e;
-  font-size: 14px;
   opacity: 0.8;
-}
-
-/* MOBILE HEADER STACK */
-@media (max-width: 520px) {
-  .top-header {
-    flex-direction: column;
-    text-align: center;
-  }
 }
 </style>
 
@@ -158,48 +126,45 @@ footer {
 const text = {
   en: {
     subtitle: "A peaceful eco city by nature and water",
-    cityTab: "🏙️ About the City",
+    cityTab: "🏙️ City",
     airTab: "✈️ Lidlauks",
+    eventsTab: "🎉 Events",
     cityTitle: "About Uzvere",
     cityText: "Uzvere is a calm eco-city concept located near nature and water.",
-    cityList: ["Eco-friendly area", "Boat & walking access", "Mobile data available", "No big buildings"],
-    airTitle: "Uzvere Airfield",
-    airText: "Uzvere Airfield is a small grass airfield for ultralight and small aircraft.",
-    runway: "Runway length: 190 meters (grass)",
-    lands: "Small lands (Uzveres salas)",
-    weather: "Current Weather",
-    nyBadge: "🎆 NEW YEAR",
-    nyText: "Happy New Year! Welcome to 2026 🎉"
+    eventsTitle: "Upcoming Events",
+    nyText: "🎆 Happy New Year! Welcome to 2026 🎉",
+    events: [
+      { title: "New Year Celebration", date: "1 January", desc: "Fireworks and city celebration." },
+      { title: "Uzvere Aviation Day", date: "Summer", desc: "Small aircraft and pilot meet-up." }
+    ]
   },
   lv: {
     subtitle: "Mierīga eko pilsēta dabā un pie ūdens",
-    cityTab: "🏙️ Par pilsētu",
+    cityTab: "🏙️ Pilsēta",
     airTab: "✈️ Lidlauks",
+    eventsTab: "🎉 Pasākumi",
     cityTitle: "Par Uzveri",
     cityText: "Uzvere ir mierīgas eko-pilsētas koncepts dabas tuvumā.",
-    cityList: ["Videi draudzīga teritorija", "Piekļuve ar laivu un kājām", "Pieejami mobilie dati", "Nav lielu ēku"],
-    airTitle: "Uzveres lidlauks",
-    airText: "Uzveres lidlauks ir neliels zāles lidlauks vieglajai aviācijai.",
-    runway: "Skrejceļa garums: 190 metri (zāle)",
-    lands: "Mazās zemes (Uzveres salas)",
-    weather: "Laika apstākļi",
-    nyBadge: "🎆 JAUNAIS GADS",
-    nyText: "Laimīgu Jauno gadu! Laipni lūgts 2026. gadā 🎉"
+    eventsTitle: "Gaidāmie pasākumi",
+    nyText: "🎆 Laimīgu Jauno gadu! Laipni lūgts 2026. gadā 🎉",
+    events: [
+      { title: "Jaunā gada svinības", date: "1. janvāris", desc: "Salūts un svinības pilsētā." },
+      { title: "Uzveres aviācijas diena", date: "Vasara", desc: "Mazās lidmašīnas un piloti." }
+    ]
   },
   ru: {
     subtitle: "Тихий эко-город среди природы и воды",
-    cityTab: "🏙️ О городе",
+    cityTab: "🏙️ Город",
     airTab: "✈️ Аэродром",
+    eventsTab: "🎉 События",
     cityTitle: "О Узвере",
-    cityText: "Узвере — концепция спокойного эко-города рядом с природой.",
-    cityList: ["Экологичная зона", "Доступ пешком и на лодке", "Мобильный интернет", "Без больших зданий"],
-    airTitle: "Аэродром Узverе",
-    airText: "Аэродром Узvere — небольшой травяной аэродром.",
-    runway: "Длина ВПП: 190 метров (трава)",
-    lands: "Небольшие участки (Uzveres salas)",
-    weather: "Погода сейчас",
-    nyBadge: "🎆 НОВЫЙ ГОД",
-    nyText: "С Новым годом! Добро пожаловать в 2026 🎉"
+    cityText: "Узвере — концепция спокойного эко-города.",
+    eventsTitle: "Предстоящие события",
+    nyText: "🎆 С Новым годом! Добро пожаловать в 2026 🎉",
+    events: [
+      { title: "Празднование Нового года", date: "1 января", desc: "Фейерверки и праздник." },
+      { title: "Авиационный день Узвере", date: "Лето", desc: "Малые самолёты и пилоты." }
+    ]
   }
 };
 
@@ -207,20 +172,22 @@ function setLang(l) {
   document.getElementById("subtitle").innerText = text[l].subtitle;
   document.getElementById("cityBtn").innerText = text[l].cityTab;
   document.getElementById("airBtn").innerText = text[l].airTab;
+  document.getElementById("eventsBtn").innerText = text[l].eventsTab;
   document.getElementById("cityTitle").innerText = text[l].cityTitle;
   document.getElementById("cityText").innerText = text[l].cityText;
-  document.getElementById("airTitle").innerText = text[l].airTitle;
-  document.getElementById("airText").innerText = text[l].airText;
-  document.getElementById("runway").innerText = text[l].runway;
-  document.getElementById("lands").innerText = text[l].lands;
-  document.getElementById("weatherTitle").innerText = text[l].weather;
-
-  // New Year banner text
-  document.getElementById("nyBadge").innerText = text[l].nyBadge;
+  document.getElementById("eventsTitle").innerText = text[l].eventsTitle;
   document.getElementById("nyText").innerText = text[l].nyText;
 
-  document.getElementById("cityList").innerHTML =
-    text[l].cityList.map(i => `<li>${i}</li>`).join("");
+  const box = document.getElementById("eventsList");
+  box.innerHTML = "";
+  text[l].events.forEach(e => {
+    box.innerHTML += `
+      <div class="event">
+        <h4>${e.title}</h4>
+        <strong>${e.date}</strong>
+        <p>${e.desc}</p>
+      </div>`;
+  });
 }
 
 function openTab(id) {
@@ -230,50 +197,25 @@ function openTab(id) {
   document.getElementById(id + "Btn").classList.add("active");
 }
 
-async function loadWeather() {
-  try {
-    const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.53&longitude=21.17&current_weather=true");
-    const w = (await res.json()).current_weather;
-    document.getElementById("weather").innerText =
-      `🌡️ ${w.temperature}°C   🌬️ ${w.windspeed} km/h`;
-  } catch {
-    document.getElementById("weather").innerText = "Weather unavailable";
-  }
-}
-
-function closeNyBanner() {
-  const el = document.getElementById("nyBanner");
-  el.style.display = "none";
-  localStorage.setItem("uzvere_ny_closed", "1");
-}
-
-function initNyBanner() {
-  // Show banner unless user closed it
-  const closed = localStorage.getItem("uzvere_ny_closed") === "1";
-  if (closed) {
-    document.getElementById("nyBanner").style.display = "none";
-  }
+function closeNY() {
+  document.getElementById("nyBanner").style.display = "none";
 }
 </script>
 </head>
 
-<body onload="setLang('en'); loadWeather(); initNyBanner();">
+<body onload="setLang('en')">
 
 <header class="top-header">
-  <img src="logo.png" alt="Uzvere Logo" class="logo">
+  <img src="logo.png" class="logo">
   <div class="header-right">
     <h1>Uzvere</h1>
     <p id="subtitle"></p>
   </div>
 </header>
 
-<!-- NEW YEAR BANNER -->
 <div id="nyBanner" class="ny-banner">
-  <div class="left">
-    <div id="nyBadge" class="ny-badge">🎆 NEW YEAR</div>
-    <div id="nyText" class="ny-text">Happy New Year! 🎉</div>
-  </div>
-  <button class="ny-close" onclick="closeNyBanner()" aria-label="Close">×</button>
+  <div id="nyText"></div>
+  <button class="ny-close" onclick="closeNY()">×</button>
 </div>
 
 <div class="lang">
@@ -285,46 +227,32 @@ function initNyBanner() {
 <nav>
   <button id="cityBtn" class="active" onclick="openTab('city')"></button>
   <button id="airBtn" onclick="openTab('airfield')"></button>
+  <button id="eventsBtn" onclick="openTab('events')"></button>
 </nav>
 
 <section id="city" class="active">
   <h2 id="cityTitle"></h2>
   <div class="card">
     <p id="cityText"></p>
-    <ul id="cityList"></ul>
     <iframe src="https://www.google.com/maps?q=Uzvere,+Grobiņas+pagasts,+Latvia&z=14&output=embed"></iframe>
   </div>
 </section>
 
 <section id="airfield">
-  <h2 id="airTitle"></h2>
   <div class="card">
-    <p id="airText"></p>
-    <p><strong id="runway"></strong></p>
-
-    <h3 id="weatherTitle"></h3>
-    <div id="weather">Loading...</div>
-
-    <!-- LIDLAUKS (EXACT EMBED) -->
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d62a623717%3A0xc5da578c02c12f4c!2sUzveres%20Lidlauks!5e0!3m2!1sen!2slv!4v1766850251999!5m2!1sen!2slv"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-
-    <h3 id="lands"></h3>
-
-    <!-- SMALL LANDS (EXACT EMBED) -->
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa947e6d7bdb9%3A0x7fdc2e8d27890a3b!2sUzveres%20salas!5e0!3m2!1sen!2slv!4v1766850098667!5m2!1sen!2slv"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+    <p>Uzveres Lidlauks • Runway 190 m</p>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d62a623717%3A0xc5da578c02c12f4c!2sUzveres%20Lidlauks!5e0!3m2!1sen!2slv!4v1766850251999!5m2!1sen!2slv"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa947e6d7bdb9%3A0x7fdc2e8d27890a3b!2sUzveres%20salas!5e0!3m2!1sen!2slv!4v1766850098667!5m2!1sen!2slv"></iframe>
   </div>
 </section>
 
+<section id="events">
+  <h2 id="eventsTitle"></h2>
+  <div id="eventsList"></div>
+</section>
+
 <footer>
-  © 2026 Uzvere • City & Airfield Concept
+  © 2026 Uzvere • City Concept
 </footer>
 
 </body>
