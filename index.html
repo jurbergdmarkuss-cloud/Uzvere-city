@@ -5,120 +5,504 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Uzvere City</title>
 
+<!-- Modern Premium Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+/* THEME ENGINE VARIABLES */
+body {
+  --bg-dark: #080f0d;
+  --card-bg: rgba(18, 38, 34, 0.45);
+  --card-border: rgba(94, 234, 212, 0.12);
+  --accent-mint: #2dd4bf;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --nav-bg: rgba(8, 15, 13, 0.85);
+  --brand-grad: linear-gradient(to right, #ffffff, #2dd4bf);
+  --bg-gradient: 
+    radial-gradient(circle at 10% 20%, rgba(15, 118, 110, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(4, 47, 46, 0.3) 0%, transparent 50%);
+  --control-bg: rgba(255, 255, 255, 0.03);
+}
+
+body.light-theme {
+  --bg-dark: #f2f7f5;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(15, 118, 110, 0.15);
+  --accent-mint: #0f766e;
+  --text-main: #0f2924;
+  --text-muted: #64748b;
+  --nav-bg: rgba(242, 247, 245, 0.85);
+  --brand-grad: linear-gradient(to right, #0f2924, #0f766e);
+  --bg-gradient: 
+    radial-gradient(circle at 10% 20%, rgba(45, 212, 191, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(204, 251, 241, 0.6) 0%, transparent 50%);
+  --control-bg: rgba(15, 118, 110, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0e1f1c;
-  color: white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-dark);
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  line-height: 1.7;
+  padding-top: 80px;
 }
 
-/* HEADER */
-.top-header {
+/* NAVIGATION & TOP BAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border);
+  z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
-  background: linear-gradient(to right, #0f766e, #115e59);
-  padding: 25px 20px;
-}
-.logo { width: 120px; }
-.header-right h1 { margin: 0; font-size: 36px; }
-.header-right p { margin: 5px 0 0; color: #5eead4; }
-
-/* NEW YEAR BANNER */
-.ny-banner {
-  max-width: 980px;
-  margin: 12px auto;
-  background: #134e4a;
-  border-radius: 12px;
-  padding: 12px 16px;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 0 40px;
 }
-.ny-close {
-  background: none;
-  border: none;
-  color: #5eead4;
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.brand h1 {
   font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 8px;
+  background: var(--control-bg);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid var(--card-border);
+}
+
+.nav-menu button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 20px;
   cursor: pointer;
 }
 
-/* LANGUAGE */
-.lang {
-  text-align: center;
-  background: #042f2e;
-  padding-bottom: 10px;
+.nav-menu button:hover {
+  color: var(--text-main);
 }
-.lang button {
-  background: #042f2e;
-  color: #5eead4;
-  border: none;
-  margin: 4px;
-  padding: 6px 12px;
+
+.nav-menu button.active {
+  background: rgba(45, 212, 191, 0.15);
+  color: var(--accent-mint);
+}
+
+.right-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* THEME TOGGLE BUTTON */
+.theme-btn {
+  background: var(--control-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  font-size: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-btn:hover {
+  border-color: var(--accent-mint);
+  background: rgba(45, 212, 191, 0.1);
+}
+
+.lang-selector {
+  display: flex;
+  gap: 4px;
+}
+
+.lang-selector button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
 }
 
-/* NAV */
-nav {
-  display: flex;
-  justify-content: center;
-  background: #042f2e;
-}
-nav button {
-  background: none;
-  border: none;
-  color: #5eead4;
-  padding: 15px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-nav button.active {
-  border-bottom: 3px solid #5eead4;
+.lang-selector button:hover {
+  color: var(--accent-mint);
 }
 
-/* SECTIONS */
+.lang-selector button.active {
+  color: var(--accent-mint);
+  border-color: var(--card-border);
+  background: rgba(45, 212, 191, 0.08);
+}
+
+/* HERO HEADER */
+.hero-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 40px auto 20px auto;
+  padding: 0 20px;
+}
+
+.hero-header p {
+  font-size: 18px;
+  color: var(--accent-mint);
+  font-weight: 500;
+  margin: 5px 0 0 0;
+  letter-spacing: 0.5px;
+}
+
+/* MAIN STRUCTURE */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 20px 80px 20px;
+}
+
 section {
   display: none;
-  padding: 30px 20px;
-  max-width: 900px;
-  margin: auto;
-}
-section.active { display: block; }
-
-/* CARDS */
-.card {
-  background: #134e4a;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 20px;
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* EVENTS */
-.event {
-  background: #0f766e;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 15px;
+section.active {
+  display: block;
 }
 
-/* MAPS */
-iframe {
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--accent-mint);
+  border-radius: 2px;
+}
+
+/* GLASS CARDS */
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.card-text {
+  font-size: 16px;
+  color: var(--text-main);
+  opacity: 0.85;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* MAP CONTAINER & IFRAME ACCENT */
+.map-container {
+  position: relative;
   width: 100%;
-  height: 300px;
-  border-radius: 12px;
+  height: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
   border: 0;
-  margin-top: 15px;
+  display: block;
+}
+
+/* TOURIST GRID */
+.tourist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.spot-card {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body:not(.light-theme) .spot-card {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.spot-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-mint);
+  box-shadow: 0 10px 20px rgba(45, 212, 191, 0.05);
+}
+
+.spot-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.spot-card h4 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.spot-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* EVENTS GRID */
+.events-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-card {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+body:not(.light-theme) .event-card {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent-mint);
+}
+
+.event-card:hover {
+  transform: translateX(6px);
+  background: rgba(45, 212, 191, 0.05);
+  border-color: rgba(45, 212, 191, 0.3);
+}
+
+.event-card h4 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.event-badge {
+  align-self: flex-start;
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--accent-mint);
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+body:not(.light-theme) .event-badge {
+  background: rgba(45, 212, 191, 0.12);
+}
+
+.event-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* SOCIAL MEDIA HUB */
+.social-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 10px 0;
+}
+
+.social-card {
+  flex: 1;
+  min-width: 280px;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+body.light-theme .social-card {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+.social-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(45, 212, 191, 0.4);
+}
+
+.social-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba(45, 212, 191, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border: 1px solid rgba(45, 212, 191, 0.2);
+}
+
+.social-card h3 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.social-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.social-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--accent-mint);
+  color: var(--bg-dark);
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(45, 212, 191, 0.25);
+}
+
+body:not(.light-theme) .social-btn {
+  color: #080f0d;
+}
+
+.social-btn:hover {
+  box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
+  opacity: 0.95;
 }
 
 /* FOOTER */
 footer {
   text-align: center;
-  padding: 20px;
-  background: #042f2e;
-  opacity: 0.8;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border-top: 1px solid var(--card-border);
+  margin-top: 40px;
+}
+
+/* RESPONSIVE DESIGN */
+@media(max-width: 768px) {
+  body { padding-top: 210px; }
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 20px;
+    gap: 12px;
+  }
+  .nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nav-menu button { padding: 6px 14px; font-size: 13px; }
+  .glass-card { padding: 20px; }
+  .map-container { height: 320px; }
+  .social-container { flex-direction: column; align-items: center; }
+  .social-card { max-width: 1000px; width: 100%; }
 }
 </style>
 
@@ -127,64 +511,140 @@ const text = {
   en: {
     subtitle: "A peaceful eco city by nature and water",
     cityTab: "🏙️ City",
-    airTab: "✈️ Lidlauks",
+    touristTab: "🗺️ Explore",
     eventsTab: "🎉 Events",
+    socialTab: "📱 Social",
     cityTitle: "About Uzvere",
-    cityText: "Uzvere is a calm eco-city concept located near nature and water.",
+    cityText: "Uzvere is a calm eco-city concept located near nature and water. Designed for sustainable living, it harmonizes cutting-edge infrastructure with pristine natural spaces.",
+    touristTitle: "Discover Uzvere",
+    spots: [
+      { icon: "🌲", title: "Eco Trails", desc: "Wander through protected, pristine forest pathways designed for hiking and cycling." },
+      { icon: "🌊", title: "Waterfront Promenade", desc: "Enjoy stunning evening sunsets, local open-air cafes, and eco-boat rentals along the water." },
+      { icon: "🔭", title: "Observation Deck", desc: "Get a breathtaking panoramic look over the entire architectural landscape of Uzvere." }
+    ],
     eventsTitle: "Upcoming Events",
-    nyText: "🎆 Happy New Year! Welcome to 2026 🎉",
     events: [
-      { title: "New Year Celebration", date: "1 January", desc: "Fireworks and city celebration." },
-      { title: "Uzvere Aviation Day", date: "Summer", desc: "Small aircraft and pilot meet-up." }
-    ]
+      { title: "New Year Celebration", date: "1 January 2027", desc: "Fireworks and community waterfront celebration." },
+      { title: "Uzvere Eco Festival", date: "Summer 2027", desc: "Celebrating sustainable green living with local food, music, and workshops." }
+    ],
+    socialTitle: "Community Channels",
+    socialText: "Stay updated with live development diaries, blueprints, and directly communicate with our growing community across our official platforms.",
+    tiktokName: "Official TikTok",
+    tiktokInfo: "Follow @uzvere.official for quick updates, architectural designs, and eco-city aesthetic clips.",
+    discordName: "Official Discord",
+    discordInfo: "Join our active community server to chat with creators, share feedback, and get direct notifications.",
+    followBtn: "Follow Channel ↗",
+    joinBtn: "Join Server ↗"
   },
   lv: {
     subtitle: "Mierīga eko pilsēta dabā un pie ūdens",
     cityTab: "🏙️ Pilsēta",
-    airTab: "✈️ Lidlauks",
+    touristTab: "🗺️ Izpētīt",
     eventsTab: "🎉 Pasākumi",
+    socialTab: "📱 Sociālie",
     cityTitle: "Par Uzveri",
-    cityText: "Uzvere ir mierīgas eko-pilsētas koncepts dabas tuvumā.",
+    cityText: "Uzvere ir mierīgas eko-pilsētas koncepts dabas tuvumā. Veidots ilgtspējīgai dzīvei, apvienojot mūsdienīgu infrastruktūru ar neskartu dabu.",
+    touristTitle: "Atklāj Uzveri",
+    spots: [
+      { icon: "🌲", title: "Eko takas", desc: "Pastaigājies pa aizsargājamām, neskartām meža takām, kas paredzētas pārgājieniem un riteņbraukšanai." },
+      { icon: "🌊", title: "Krastmalas promenāde", desc: "Izbaudi satriecošus saulrietus, vietējās brīvdabas kafejnīcas un eko-laivu nomu pie ūdens." },
+      { icon: "🔭", title: "Skatu laukums", desc: "Gūsti elpu aizraujošu panorāmas skatu uz visu Uzveres arhitektonisko ainavu." }
+    ],
     eventsTitle: "Gaidāmie pasākumi",
-    nyText: "🎆 Laimīgu Jauno gadu! Laipni lūgts 2026. gadā 🎉",
     events: [
-      { title: "Jaunā gada svinības", date: "1. janvāris", desc: "Salūts un svinības pilsētā." },
-      { title: "Uzveres aviācijas diena", date: "Vasara", desc: "Mazās lidmašīnas un piloti." }
-    ]
+      { title: "Jaunā gada svinības", date: "1. janvāris 2027", desc: "Salūts un pilsētas svinības krastmalā." },
+      { title: "Uzveres Eko Festivāls", date: "2027. gada vasara", desc: "Zaļā dzīvesveida svinēšana ar vietējo pārtiku, mūziku un radošajām darbnīcām." }
+    ],
+    socialTitle: "Kopienas kanāli",
+    socialText: "Sekojiet līdzi tiešraides attīstības dienasgrāmatām, rasējumiem un nepastarpināti sazinieties ar mūsu augošo kopienu oficiālajās platformās.",
+    tiktokName: "Oficiālais TikTok",
+    tiktokInfo: "Seko @uzvere.official, lai redzētu ātrus jaunumus, pilsētas rasējumus un estētiskus eko-pilsētas video.",
+    discordName: "Oficiālais Discord",
+    discordInfo: "Pievienojies mūsu aktīvajam kopienas serverim, lai tērzētu ar veidotājiem, dalītos ar idejām un saņemtu paziņojumus.",
+    followBtn: "Seko kanālam ↗",
+    joinBtn: "Pievienoties serverim ↗"
   },
   ru: {
     subtitle: "Тихий эко-город среди природы и воды",
     cityTab: "🏙️ Город",
-    airTab: "✈️ Аэродром",
+    touristTab: "🗺️ Места",
     eventsTab: "🎉 События",
+    socialTab: "📱 Соцсети",
     cityTitle: "О Узвере",
-    cityText: "Узвере — концепция спокойного эко-города.",
+    cityText: "Узвере — концепция спокойного эко-города в окружении природы. Место для устойчивого проживания, гармонично сочетающее инфраструктуру и природу.",
+    touristTitle: "Откройте Узвере",
+    spots: [
+      { icon: "🌲", title: "Эко-тропы", desc: "Прогуляйтесь по охраняемым лесным тропинкам, созданным для пеших и велосипедных прогулок." },
+      { icon: "🌊", title: "Набережная", desc: "Наслаждайтесь закатами, уютными уличными кафе и прокатом экологичных лодок у воды." },
+      { icon: "🔭", title: "Смотровая площадка", desc: "Полюбуйтесь захватывающим панорамным видом на всю архитектуру и ландшафт Узвере." }
+    ],
     eventsTitle: "Предстоящие события",
-    nyText: "🎆 С Новым годом! Добро пожаловать в 2026 🎉",
     events: [
-      { title: "Празднование Нового года", date: "1 января", desc: "Фейерверки и праздник." },
-      { title: "Авиационный день Узвере", date: "Лето", desc: "Малые самолёты и пилоты." }
-    ]
+      { title: "Празднование Нового года", date: "1 января 2027", desc: "Фейерверки и общегородской праздник у воды." },
+      { title: "Эко-фестиваль Узвере", date: "Лето 2027", desc: "Праздник экологичного образа жизни с местной едой, музыкой и мастер-классами." }
+    ],
+    socialTitle: "Наши каналы",
+    socialText: "Следите за дневниками разработки, чертежами и общайтесь напрямую с нашим растущим сообществом на официальных платформах.",
+    tiktokName: "Официальный TikTok",
+    tiktokInfo: "Подписывайтесь на @uzvere.official, чтобы смотреть анонсы, чертежи и эстетичные видео о нашем городе.",
+    discordName: "Официальный Discord",
+    discordInfo: "Вступайте в наш активный сервер, чтобы общаться с создателями, делиться идеями и мгновенно получать новости.",
+    followBtn: "Подписаться ↗",
+    joinBtn: "Войти на сервер ↗"
   }
 };
 
+let currentLang = 'en';
+
 function setLang(l) {
+  currentLang = l;
+  
+  document.querySelectorAll(".lang-selector button").forEach(b => b.classList.remove("active"));
+  document.getElementById(`lang-${l}`).classList.add("active");
+  
   document.getElementById("subtitle").innerText = text[l].subtitle;
   document.getElementById("cityBtn").innerText = text[l].cityTab;
-  document.getElementById("airBtn").innerText = text[l].airTab;
+  document.getElementById("touristBtn").innerText = text[l].touristTab;
   document.getElementById("eventsBtn").innerText = text[l].eventsTab;
+  document.getElementById("socialBtn").innerText = text[l].socialTab;
+  
   document.getElementById("cityTitle").innerText = text[l].cityTitle;
   document.getElementById("cityText").innerText = text[l].cityText;
+  document.getElementById("touristTitle").innerText = text[l].touristTitle;
   document.getElementById("eventsTitle").innerText = text[l].eventsTitle;
-  document.getElementById("nyText").innerText = text[l].nyText;
+  document.getElementById("socialTitle").innerText = text[l].socialTitle;
+  document.getElementById("socialText").innerText = text[l].socialText;
+  
+  // TikTok Card
+  document.getElementById("tiktokName").innerText = text[l].tiktokName;
+  document.getElementById("tiktokInfo").innerText = text[l].tiktokInfo;
+  document.getElementById("tiktokLinkBtn").innerText = text[l].followBtn;
+  
+  // Discord Card
+  document.getElementById("discordName").innerText = text[l].discordName;
+  document.getElementById("discordInfo").innerText = text[l].discordInfo;
+  document.getElementById("discordLinkBtn").innerText = text[l].joinBtn;
 
+  // Build Tourist Spots Grid
+  const spotsBox = document.getElementById("spotsList");
+  spotsBox.innerHTML = "";
+  text[l].spots.forEach(s => {
+    spotsBox.innerHTML += `
+      <div class="spot-card">
+        <span class="spot-icon">${s.icon}</span>
+        <h4>${s.title}</h4>
+        <p>${s.desc}</p>
+      </div>`;
+  });
+
+  // Build Events List
   const box = document.getElementById("eventsList");
   box.innerHTML = "";
   text[l].events.forEach(e => {
     box.innerHTML += `
-      <div class="event">
+      <div class="event-card">
+        <span class="event-badge">📅 ${e.date}</span>
         <h4>${e.title}</h4>
-        <strong>${e.date}</strong>
         <p>${e.desc}</p>
       </div>`;
   });
@@ -192,67 +652,125 @@ function setLang(l) {
 
 function openTab(id) {
   document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".nav-menu button").forEach(b => b.classList.remove("active"));
+  
   document.getElementById(id).classList.add("active");
   document.getElementById(id + "Btn").classList.add("active");
 }
 
-function closeNY() {
-  document.getElementById("nyBanner").style.display = "none";
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.getElementById("theme-toggle");
+  
+  body.classList.toggle("light-theme");
+  
+  if(body.classList.contains("light-theme")) {
+    btn.innerText = "☀️";
+  } else {
+    btn.innerText = "🌙";
+  }
 }
 </script>
 </head>
 
 <body onload="setLang('en')">
 
-<header class="top-header">
-  <img src="logo.png" class="logo">
-  <div class="header-right">
+<!-- TOP FIXED NAVIGATION BAR -->
+<header class="navbar">
+  <div class="brand">
+    <img src="logo.png" alt="🌲" class="brand-logo" onerror="this.style.display='none'">
     <h1>Uzvere</h1>
-    <p id="subtitle"></p>
+  </div>
+  
+  <nav class="nav-menu">
+    <button id="cityBtn" class="active" onclick="openTab('city')">🏙️ City</button>
+    <button id="touristBtn" onclick="openTab('tourist')">🗺️ Explore</button>
+    <button id="eventsBtn" onclick="openTab('events')">🎉 Events</button>
+    <button id="socialBtn" onclick="openTab('social')">📱 Social</button>
+  </nav>
+  
+  <div class="right-controls">
+    <button id="theme-toggle" class="theme-btn" onclick="toggleTheme()">🌙</button>
+    
+    <div class="lang-selector">
+      <button id="lang-lv" onclick="setLang('lv')">LV</button>
+      <button id="lang-en" onclick="setLang('en')">EN</button>
+      <button id="lang-ru" onclick="setLang('ru')">RU</button>
+    </div>
   </div>
 </header>
 
-<div id="nyBanner" class="ny-banner">
-  <div id="nyText"></div>
-  <button class="ny-close" onclick="closeNY()">×</button>
+<!-- HERO MOTTO CONTAINER -->
+<div class="hero-header">
+  <p id="subtitle"></p>
 </div>
 
-<div class="lang">
-  <button onclick="setLang('lv')">LV</button>
-  <button onclick="setLang('en')">EN</button>
-  <button onclick="setLang('ru')">RU</button>
-</div>
+<!-- MAIN CONTENT VIEWS -->
+<main>
+  
+  <!-- CITY SECTION -->
+  <section id="city" class="active">
+    <h2 id="cityTitle"></h2>
+    <div class="glass-card">
+      <p id="cityText" class="card-text"></p>
+      <div class="map-container">
+        <!-- LIVE GOOGLE MAPS EMBED -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4087.0062271356283!2d21.05484474153976!3d56.498291489864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d6e80b4deb%3A0xfee7eac19a149f9b!2sUzvere!5e1!3m2!1sen!2slv!4v1780685032869!5m2!1sen!2slv" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
 
-<nav>
-  <button id="cityBtn" class="active" onclick="openTab('city')"></button>
-  <button id="airBtn" onclick="openTab('airfield')"></button>
-  <button id="eventsBtn" onclick="openTab('events')"></button>
-</nav>
+  <!-- TOURIST SECTION -->
+  <section id="tourist">
+    <h2 id="touristTitle"></h2>
+    <div class="glass-card">
+      <div id="spotsList" class="tourist-grid"></div>
+    </div>
+  </section>
 
-<section id="city" class="active">
-  <h2 id="cityTitle"></h2>
-  <div class="card">
-    <p id="cityText"></p>
-    <iframe src="https://www.google.com/maps?q=Uzvere,+Grobiņas+pagasts,+Latvia&z=14&output=embed"></iframe>
-  </div>
-</section>
+  <!-- EVENTS SECTION -->
+  <section id="events">
+    <h2 id="eventsTitle"></h2>
+    <div class="glass-card">
+      <div id="eventsList" class="events-grid"></div>
+    </div>
+  </section>
 
-<section id="airfield">
-  <div class="card">
-    <p>Uzveres Lidlauks • Runway 190 m</p>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa9d62a623717%3A0xc5da578c02c12f4c!2sUzveres%20Lidlauks!5e0!3m2!1sen!2slv!4v1766850251999!5m2!1sen!2slv"></iframe>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.8006622187736!2d21.0535128847429!3d56.49975283665451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa947e6d7bdb9%3A0x7fdc2e8d27890a3b!2sUzveres%20salas!5e0!3m2!1sen!2slv!4v1766850098667!5m2!1sen!2slv"></iframe>
-  </div>
-</section>
+  <!-- SOCIAL SECTION -->
+  <section id="social">
+    <h2 id="socialTitle"></h2>
+    <div class="glass-card">
+      <p id="socialText" class="card-text"></p>
+      
+      <div class="social-container">
+        <!-- TikTok Channel Card -->
+        <div class="social-card">
+          <div>
+            <div class="social-icon-wrapper" style="margin: 0 auto 12px auto;">🎵</div>
+            <h3 id="tiktokName"></h3>
+            <p id="tiktokInfo" style="margin-top: 8px;"></p>
+          </div>
+          <a id="tiktokLinkBtn" href="https://www.tiktok.com/@uzvere.official?_r=1&_t=ZN-96xrPvsRhkB" target="_blank" rel="noopener noreferrer" class="social-btn"></a>
+        </div>
 
-<section id="events">
-  <h2 id="eventsTitle"></h2>
-  <div id="eventsList"></div>
-</section>
+        <!-- Discord Server Card -->
+        <div class="social-card">
+          <div>
+            <div class="social-icon-wrapper" style="margin: 0 auto 12px auto;">💬</div>
+            <h3 id="discordName"></h3>
+            <p id="discordInfo" style="margin-top: 8px;"></p>
+          </div>
+          <a id="discordLinkBtn" href="https://discord.gg/DrZnA7rAMU" target="_blank" rel="noopener noreferrer" class="social-btn"></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
 
 <footer>
-  © 2026 Uzvere • City Concept
+  © 2026 Uzvere • Premium Eco-City Platform
 </footer>
 
 </body>
